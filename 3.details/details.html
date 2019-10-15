@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>作品的详细信息</title>
+    <link rel="stylesheet" href="../public/css/base.css">
+    <link rel="stylesheet" href="../public/css/head.css">
+    <link rel="stylesheet" href="../public/css/footer.css">
+    <link rel="stylesheet" href="./detail.css">
+    <script src="../public/js/jquery-3.2.1.js"></script>
+    <script src="../public/js/vue.min.js"></script>
+    <script src="../public/js/axios.min.js"></script>
+   
+</head>
+<body>
+     <!-- 顶部导航 可拆离-->
+    <div class="topNav">
+            <div class="pageHead">
+                 <!-- 登录注册 左边-->
+                <div class="loginBox" id="login_app">
+                    <!-- 登录之前  isLogin一开始就是false-->
+                    <div class="login_before" v-if="!isLogin">    
+                        <a class="reg"  href="http://127.0.0.1:5500/book_2/2.reader_reg_login/1.reg.html" >注册</a>
+                        <span class="navline">|</span>
+                        <a class="login"  href="http://127.0.0.1:5500/book_2/2.reader_reg_login/2.login.html" >登录</a>
+                    </div>
+                    <!-- 登录之后显示头像和书架信息也可以进入个人设置 -->
+                    <div class="login_after" v-else>
+                        <!-- 显示头像 -->
+                        <ul>
+                            <li @mouseenter="mousein" @mouseleave="mouseout">
+                                <a href="javascript:;" class="head_img" >
+                                    <!-- 用于上传的头像 -->
+                                    <img :src="src" class="header_log" v-if="src">
+                                    <!-- 默认的头像 -->
+                                    <img src="../public/images/head.png"  class="header_log" v-else>
+                                </a>
+                                <ul class="login_out" v-show="isHover==true">
+                                    <li><a href="http://127.0.0.1:5500/book_2/2.reader_reg_login/3.personal.html">我的主页</a></li>
+                                    <li><a href="http://127.0.0.1:5500/book_2/2.reader_reg_login/3.personal.html">个人设置</a></li>
+                                    <li><a href="javascript:;" @click="logout">退出</a></li>
+                                </ul>        
+                            </li>
+                            <li>
+                                 <!-- 我的书架 -->
+                                <a href="http://127.0.0.1:5500/book_2/5.myBookCase/bookcase_new.html" class="mybook">我的书架
+                                    <em class="bookicon"></em>
+                                </a>
+                            </li>
+                        </ul>       
+                    </div>
+                </div>
+                <!-- 筛选框右边-->
+                <div class="searchBox">
+                    <input type="text" class="search-box"  placeholder="理想三旬" autocomplete="off">
+                    <input type="text" class="submit-input" id="search-submit">
+                    <label for="search-submit" class="search-btn">
+                        <em class="iconfont"></em>
+                    </label>  
+                </div>
+            </div>    
+    </div>
+    <!-- 首页导航栏 可拆离-->
+    <div class="top-nav-wrap">
+        <div class="box-center">
+                <ul class="cf">
+                    <li>
+                        <a href="javascript:;">古代言情</a>
+                    </li>
+                    <li>
+                        <a  href="javascript:;">都市言情</a>
+                    </li>
+                    <li>
+                        <a  href="javascript:;">玄幻仙侠</a>
+                    </li>
+                    <li>
+                        <a  href="javascript:;">悬疑科幻</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">考古历史</a>
+                    </li>
+                    <li>
+                        <a  href="javascript:;">浪漫学园</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">儿童文学</a>
+                    </li>
+                </ul>
+        </div>
+    </div>
+    <!-- 主体部分 -->
+    <div class="wraphx loaded">
+        <div class="wrap-body" id="detail_app">
+            <div class="flower left"></div>
+            <div class="flower right"></div>
+            <!-- 面包屑导航 -->
+            <div class="crumbs-nav center1020">
+                <span>
+                    <a href="http://127.0.0.1:5500/book_2/1.index/index.html">首页</a>
+                    <em class="iconfont">＞</em>
+                    <a href="javascript:;"  v-text="details.classification"></a>
+                    <em class="iconfont">＞</em>
+                    <a href="javascript:;" v-text="`${details.is_end?'已完结':'连载中'}`"></a>
+                    <em class="iconfont">＞</em>
+                    <a href="javascript:;" v-text="details.name"></a>
+                </span>
+            </div>
+            <!-- 图书详细信息 -->
+            <div class="book-detail-wrap center1020" >
+                <!-- 上部分 -->
+                <div class="book-information cf">
+                    <!-- 图片 -->
+                    <div class="book-img">
+                        <a href="#" class="J-getJumUrl default">
+                            <img :src="details.imageUrl" alt="标签页">
+                        </a>
+                    </div>
+                    <!-- 文字 -->
+                    <div class="book-info">
+                        <!-- 展开与收起功能有待完善 -->
+                        <h1>
+                            <em v-text="details.name"></em>
+                            <a href="javascript:;" class="writer default" v-text=`作者:${details.authorName}`></a>
+                        </h1>
+                        <p class="tag-box">
+                            <span class="tag">
+                                <i class="blue" v-text="`${details.is_end?'已完结':'连载中'}`"></i>
+                                <i class="blue">签约</i>
+                                <i class="org">VIP</i>
+                                <i v-text="details.classification"></i>
+                                <!-- <i>悬疑探险</i> -->
+                            </span>
+                        </p>
+                        <p class="total">
+                            <span v-text="details.word_count"></span>
+                            <em>千字</em>
+                            <i>|</i>
+                            <span v-text="details.collection_amount"></span>
+                            <em>总收藏</em>
+                            <i>|</i>
+                            <span v-text="details.click_volume"></span>
+                            <em>总点击</em>
+                        </p>
+                        <p class="intro" v-if="details.introduction" v-text=`${details.introduction.slice(0,150)}...`>                                                     
+                        </p>
+                        <p class="btn">
+                            <a href="#" class="border-btn J-getJumUrl">免费试读</a>
+                            <a  @click="addbookcase" href="javascript:;" class="border-btn add-book">加入书架</a>
+                        </p>
+                    </div>
+
+                </div>
+                <!-- 作品信息与目录 -->
+                <div class="content-nav-wrap cf">
+                    <div class="nav-wrap f1">
+                        <ul>
+                            <!-- class="act"为选中颜色 -->
+                            <li  :class="{act:isCheck}" @click="change">
+                                <a href="javascript:;" class="lang">作品信息</a>
+                            </li>
+                            <li class="j_catalog_block"  :class="{act:!isCheck}" @click="change">
+                                <a href="javascript:;" class="lang">
+                                    目录
+                                    <i>
+                                        <span id="J-catalogCount" v-text="`(${num}章)`"></span>
+                                    </i>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div class="update" v-if="num">
+                        <p>
+                            <a href="javascript:;" class="blue" v-text=`更新至${details.lastChapterName}`></a>
+                            <i>·</i>
+                            <span>2天前</span>
+                        </p>
+
+                    </div>              
+                </div>
+                <!-- 作品讨论区 -->
+                <div class="book-content-wrap cf" v-show="isCheck">
+                    <!-- 左边 -->
+                    <div class="left-wrap f1">
+                        <div class="banner-wrap mb20">
+                            <a href="javascript:;">
+                                <img src="./images/02.jpg">
+                            </a>
+                        </div>
+                        <!-- 作品讨论区 -->
+                        <div class="left-block-bg m-cmmt">
+                            <div class="left-wrap-title">
+                                <h3>作品讨论区</h3>
+                            </div>
+                            <!-- 这里是鼠标获取焦点时才显示的show -->
+                            <div class="send-comment-wrap cf show">
+                                <!-- 用户头像 -->
+                                <div class="avatar f1">
+                                    <img src="./images/100.png" alt="">
+                                </div>
+                                <div class="send-comment-input f1">
+                                    <div class="send-content">
+                                        <textarea placeholder="输入评论内容" v-model="content"></textarea>
+                                        <span class="count">
+                                            <em>0/2000字</em>
+                                        </span>
+                                    </div>
+                                    <div class="btn">
+                                        <a href="javascript:;" class="blue">取消</a>
+                                        <a href="javascript:;" class="red-btn" @click="submit">发表</a>
+
+                                    </div>
+                                   
+                                </div>          
+                            </div>
+                            <!-- 用户的评论 -->
+                            <div class="cmmts j-flag">
+                                    <h3 class="u-hd4" v-text="`最新评论(${comment_count})`"></h3>
+                                    <div id="65094981570870975834" class="itm" data-id="6509498" v-for="(elem,i) of comment" :key="i">
+                                        <div class="head">
+                                            <a href="#">
+                                                <!-- 如果用户有头像 -->
+                                                <img :src="elem.avatar" v-if="elem.avatar.slice(-3)=='jpg'">
+                                                <img src="../public/images/head.png" v-else>
+                                            </a>
+                                            </div>
+                                            <div class="cntwrap">
+                                                <div class="">
+                                                    <div class="cnt f-brk">
+                                                        <a href="#" class="s-fc7" v-text="elem.user_name"></a>
+                                                        <span v-text="`:${elem.content}`"></span>
+                                                    </div>
+                                                    </div>
+                                                    <div class="rp">
+                                                        <div class="time s-fc4" v-text="elem.create_time"></div>
+                                                        <a data-id="6509498" data-type="like" href="javascript:void(0)">
+                                                            <i class="zan u-icn2 u-icn2-12"></i> (67.5万)
+                                                        </a>
+                                                        <span class="sep">|</span>
+                                                    <a href="javascript:void(0)" class="s-fc3" data-id="6509498" data-type="reply">回复</a>
+                                                </div>
+                                            </div>
+                                    </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <!-- 右边推荐 -->
+                    <div class="right-wrap fr">
+                        <div class="type-rec-wrap inner-wrap">
+                            <h3 class="lang">同类推荐</h3>
+                            <ul>
+                                <li v-for="(elem,i) of recommend" :index="i">
+                                    <div class="img-box">
+                                        <a :href="`http://127.0.0.1:5500/book_2/3.details/details.html?id=${elem.id}`">
+                                            <img  :src="elem.imageUrl">
+                                        </a>
+
+                                    </div>
+                                    <div class="book-info">
+                                        <h4>
+                                            <a :href="`http://127.0.0.1:5500/book_2/3.details/details.html?id=${elem.id}`"  v-text="elem.name"></a>
+                                        </h4>
+                                        <p class="author">
+                                            <a href="javascript:;" v-text="`作者：${elem.authorName}`"></a>
+                                        </p>
+                                        <p class="intro" v-text="`${elem.introduction.slice(0,20)}...`"></p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>                       
+                    </div>
+                </div>
+
+                <!-- 作品目录 -->
+                <div class="catalog-content-wrap catalog-page" v-show="!isCheck">
+                        <div class="volume-wrap">
+                            <div class="volume">
+                                <h3>
+                                    <b v-text="details.name"></b>
+                                    <i>·</i>
+                                    <b v-text="`共${num}章`"></b>
+                                    <span class="free">免费</span>
+                                </h3>
+                                <ul class="cf">
+                                    <li data-rid="1">
+                                        <a href="javascript:;" >楔子</a>
+                                    </li>
+                                    <li  v-for="(elem,i) of chapters" :key="i">
+                                        <a :href="i==0?`http://127.0.0.1:5500/book_2/4.pages/page.html?id=${i+1}`:`http://127.0.0.1:5500/book/4.pages/page.html?id=${i+4}`" v-text="elem.name"></a>
+                                    </li>
+                                </ul>
+    
+                            </div>
+                        </div>
+    
+                </div>
+                  
+            </div>
+
+        </div>
+    </div>
+     <!-- 页脚 -->
+     <div class="footer">
+            <div class="footer_main cf">
+                <div class="user clearfix">
+                    <dl class="cooperate_dl">
+                        <dt></dt>
+                        <dd>
+                            <p>
+                                外部渠道联系:张小姐
+                                <!-- 邮箱 -->
+                                <a href="#">lhw_wei@yuewen.com</a>                       
+                            </p>
+                            <p>
+                                外部渠道联系:张小姐
+                                <!-- 邮箱 -->
+                                <a href="#">lhw_wei@yuewen.com</a>                       
+                            </p>
+                            
+                        </dd>
+    
+    
+    
+                    </dl>
+                </div>
+                <div class="foot">
+                    <p>
+                        <a href="http://www.tencent.com/" target="_blank" rel="nofollow">关于腾讯</a>
+                        <a href="http://www.tencent.com/index_e.shtml" target="_blank" rel="nofollow">About Tencent</a>
+                        <a href="http://www.qq.com/contract.shtml" target="_blank" rel="nofollow">服务协议</a>
+                        <a href="http://open.qq.com/" target="_blank" rel="nofollow">开放平台</a>
+                        <a href="http://www.tencentmind.com/" target="_blank" rel="nofollow">广告服务</a>
+                        <a href="http://hr.tencent.com/" target="_blank" rel="nofollow">腾讯招聘</a>
+                        <a href="http://gongyi.qq.com/" target="_blank" rel="nofollow">腾讯公益</a>
+                        <a href="https://www.yuewen.com/service.html" target="_blank" rel="nofollow">客服中心</a>
+                        <a class="nobroder" href="http://www.qq.com/map/" target="_blank" rel="nofollow">网站导航</a>
+                    </p>
+                    <p> Copyright&nbsp;&nbsp;©&nbsp;1998&nbsp;-&nbsp;2019&nbsp;Tencent.&nbsp;All&nbsp;Rights&nbsp;Reserved</p>
+                    <p>腾讯公司&nbsp;版权所有</p>
+                    <p>粤府新函[2001]87号 粤网文[2011]0483-070号 网络视听许可证1904073号 网站备案/许可证号：
+                        <a style="border-right: 0 solid #CCC;" href="http://beian.miit.gov.cn/publish/query/indexFirst.action" rel="noreferrer" target="_blank">粤B2-20090059 B2-20090028</a>
+                    </p>
+                </div>
+                <div id="icp">
+                    <a href="http://www.sznet110.gov.cn/netalarm/index.jsp" target="_blank" rel="external nofollow">
+                        <img src="http://img1.chuangshi.qq.com/yunqi/p1/footer_img1.png" width="122" height="52">
+                    </a>
+                    <a href="http://www.sznet110.gov.cn/webrecord/innernet/Welcome.jsp?bano=4403101010155" target="_blank" rel="external nofollow"><img src="http://img1.chuangshi.qq.com/yunqi/p1/footer_img2.png" width="122" height="52">
+                    </a>
+                    <a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=0272000112400002" target="_blank" rel="external nofollow">
+                        <img src="http://img1.chuangshi.qq.com/yunqi/p1/footer_img3.png" width="122" height="52">
+                    </a>
+                    <a href="http://www.12377.cn/" target="_blank" rel="external nofollow">
+                        <img src="http://img1.chuangshi.qq.com/yunqi/p1/footer_img4.png" width="122" height="52">
+                    </a>
+                    <a href="http://www.wenming.cn/" target="_blank" rel="external nofollow">
+                        <img src="http://img1.chuangshi.qq.com/yunqi/p1/footer_img5.png" width="122" height="52">
+                    </a>
+                    <a href="http://www.shjbzx.cn/" target="_blank" rel="external nofollow">
+                        <img src="http://img1.chuangshi.qq.com/yunqi/p1/footer_img6.png" width="122" height="52">
+                    </a>
+                </div>
+    
+            </div>
+    
+    
+    
+    
+    
+    </div>
+
+    <script src="../public/js/head.js"></script>
+    <script src="./details.js"></script>
+
+    
+</body>
+</html>
+   
+  

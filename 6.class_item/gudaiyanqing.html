@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>古代言情系列</title>
+    <link rel="stylesheet" href="../public/css/base.css">
+    <link rel="stylesheet" href="../public/css/head.css">
+    <link rel="stylesheet" href="../public/css/footer.css">
+    
+</head>
+<body>
+    <!-- 顶部导航 可拆离-->
+    <div class="topNav">
+            <div class="pageHead">
+                 <!-- 登录注册 左边-->
+                <div class="loginBox" id="login_app">
+                    <!-- 登录之前  isLogin一开始就是false-->
+                    <div class="login_before" v-if="!isLogin">    
+                        <a class="reg"  href="http://127.0.0.1:5500/book/2.reader_reg_login/1.reg.html" target="_blank">注册</a>
+                        <span class="navline">|</span>
+                        <a class="login"  href="http://127.0.0.1:5500/book/2.reader_reg_login/2.login.html" target="_blank">登录</a>
+                    </div>
+                    <!-- 登录之后显示头像和书架信息也可以进入个人设置 -->
+                    <div class="login_after" v-else>
+                        <!-- 显示头像 -->
+                        <ul>
+                            <li @mouseenter="mousein" @mouseleave="mouseout">
+                                <a href="#" class="head_img" >
+                                    <!-- 用于上传的头像 -->
+                                    <img :src="src" class="header_log" v-if="src">
+                                    <!-- 默认的头像 -->
+                                    <img src="../public/images/head.png"  class="header_log" v-else>
+                                </a>
+                                <ul class="login_out" v-show="isHover==true">
+                                    <li><a href="">我的主页</a></li>
+                                    <li><a href="http://127.0.0.1:5500/book/2.reader_reg_login/3.personal.html" target="_blank">个人设置</a></li>
+                                    <li><a href="javascript:;" @click="logout">退出</a></li>
+                                </ul>        
+                            </li>
+                            <li>
+                                 <!-- 我的书架 -->
+                                <a href="http://127.0.0.1:5500/book/5.myBookCase/bookcase_new.html" class="mybook">我的书架
+                                    <em class="bookicon"></em>
+                                </a>
+                            </li>
+                        </ul>       
+                    </div>
+                </div>
+                <!-- 筛选框右边-->
+                <div class="searchBox">
+                    <input type="text" class="search-box"  placeholder="理想三旬" autocomplete="off">
+                    <input type="text" class="submit-input" id="search-submit">
+                    <label for="search-submit" class="search-btn">
+                        <em class="iconfont"></em>
+                    </label>  
+                </div>
+            </div>    
+    </div>
+    <!-- 首页导航栏 可拆离-->
+    <div class="top-nav-wrap">
+        <div class="box-center">
+                <ul class="cf">
+                    <li>
+                        <a href="#">古代言情</a>
+                    </li>
+                    <li>
+                        <a href="#">都市言情</a>
+                    </li>
+                    <li>
+                        <a href="#">玄幻仙侠</a>
+                    </li>
+                    <li>
+                        <a href="#">悬疑科幻</a>
+                    </li>
+                    <li>
+                        <a href="#">考古历史</a>
+                    </li>
+                    <li>
+                        <a href="#">浪漫学园</a>
+                    </li>
+                    <li>
+                        <a href="#">儿童文学</a>
+                    </li>
+                </ul>
+        </div>
+    </div>
+
+    
+</body>
+</html>

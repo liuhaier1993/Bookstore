@@ -1,0 +1,99 @@
+.footer {
+    background: #F2F2F2;
+    border-top: 3px solid #DDD;
+    margin-top: 20px;
+    padding-bottom: 16px;
+}
+
+
+.footer_main {
+    background: #F2F2F2;
+    border-top: 3px solid #FD6C83;
+    margin: 0 auto;
+    position: relative;
+    top: -3px;
+    width: 1000px;
+}
+
+.user {
+    overflow: hidden;
+}
+
+.cooperate_dl {
+    margin: 30px 0 0 290px;
+}
+
+.user dl, .user dl dt, .user dl dd {
+    display: inline-block;
+}
+.user_dl dt, .cooperate_dl dt {
+    background: url('../images/footer.png') no-repeat;
+}
+
+.cooperate_dl dt {
+    background-position: 0 -148px;
+    height: 43px;
+    width: 50px;
+}
+
+.user dl, .user dl dt, .user dl dd {
+    display: inline;
+    float: left;
+}
+
+
+.user dl dd {
+    line-height: 20px;
+    margin: 0 0 0 20px;
+}
+
+
+user dl dd p a {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.foot {
+    clear: both;
+    border-top: 1px solid #CCC;
+    margin-top: 20px;
+    padding-top: 10px;
+}
+.foot p {
+    line-height: 24px;
+    text-align: center;
+    font-family: Arial;
+}
+
+.foot p a {
+    padding: 0 10px 0 0;
+    display: inline-block;
+    border-right: 1px solid #CCC;
+    line-height: 15px;
+    margin-right: 10px;
+}
+
+#icp {
+    padding: 15px 0 0;
+    text-align: center;
+}
+
+#icp a img {
+    margin-right: 10px;
+    display: inline-block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,246 @@
+body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -khtml-user-select: none;
+}
+body {
+    font-family: PingFangSC-Regular,HelveticaNeue-Light,'Helvetica Neue Light','Microsoft YaHei',sans-serif;
+    text-align: left;
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+}
+
+
+body { font: 12px/1.8 "宋体",Arial,"微软雅黑"; }
+
+body{
+    background: #ede7da url('./images/body_base_bg.5988a.png') repeat;
+}
+
+.wrap {
+    background: 0 0;
+    margin-top: 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.1);
+
+}
+
+.crumbs-nav {
+    position: relative;
+    width: 800px;
+    height: 22px;
+    margin: 0 auto 21px;
+}
+.crumbs-nav span a:hover{
+    color: #f01742;
+}
+
+
+.read-main-wrap {
+    font-family: PingFangSC-Regular,HelveticaNeue-Light,'Helvetica Neue Light','Microsoft YaHei',sans-serif;
+    font-size: 18px;
+    position: relative;
+    overflow: hidden;
+    width: 800px;
+    margin: 0 auto;
+}
+
+.read-main-wrap.font-family01 {
+    font-family: 'Microsoft YaHei',PingFangSC-Regular,HelveticaNeue-Light,'Helvetica Neue Light',sans-serif;
+}
+
+.text-wrap {
+    min-height: 600px;
+    margin-bottom: 24px;
+    border: 1px solid #d8d8d8;
+    background: url('./images/basic_bg.edf95.png') repeat;
+}
+
+.main-text-wrap {
+    padding: 60px 64px;
+}
+
+.main-text-wrap .text-head {
+    position: relative;
+    z-index: 5;
+    margin-bottom: 12px;
+}
+
+.main-text-wrap .text-head h3 {
+    font: 24px/32px PingFangSC-Regular,HelveticaNeue-Light,'Helvetica Neue Light','Microsoft YaHei',sans-serif;
+    overflow: hidden;
+    height: 32px;
+    margin-bottom: 12px;
+}
+
+.main-text-wrap .text-info {
+    font: 12px/16px PingFangSC-Regular,'-apple-system',Simsun;
+    height: 34px;
+}
+
+.main-text-wrap .read-content {
+    margin-bottom: 32px;
+}
+
+
+.main-text-wrap .read-content p {
+    line-height: 1.8;
+    overflow: hidden;
+    margin: .8em 0;
+}
+p {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.dib-wrap {
+    font-size: 0;
+}
+.chapter-control {
+    height: 70px;
+    margin-bottom: 24px;
+    text-align: center;
+    border: 1px solid #d8d8d8;
+    background: url('./images/basic_bg.edf95\ \(1\).png') repeat;
+}
+
+
+.dib-wrap a, .dib-wrap span {
+    display: inline-block;
+    vertical-align: middle;
+    letter-spacing: normal;
+    word-spacing: normal;
+}
+.chapter-control a {
+    font: 18px/70px PingFangSC-Regular,HelveticaNeue-Light,'Helvetica Neue Light','Microsoft YaHei',sans-serif;
+    width: 33.2%;
+}
+
+a {
+    text-decoration: none;
+    color: #262626;
+    outline: 0;
+}
+
+.dib-wrap a, .dib-wrap span {
+    display: inline-block;
+    vertical-align: middle;
+    letter-spacing: normal;
+    word-spacing: normal;
+}
+.chapter-control span {
+    height: 32px;
+    border-right: 1px solid #d8d8d8;
+}
+.dib-wrap a:hover{
+     background:#ede7da;
+}
+
+
+/* 左边浮动 */
+.left-bar-list, .right-bar-list {
+    position: fixed;
+    width: 60px;
+}
+
+.left-bar-list {
+    /* z-index: 102; */
+    top: 105px;
+    left: 50%;
+    margin-left: -468px;
+}
+
+
+.left-bar-list dd, .right-bar-list dd {
+    position: relative;
+    z-index: 100;
+    cursor: pointer;
+    border: 1px solid #d8d8d8;
+    border: 1px solid rgba(0,0,0,.1);
+    border-top: none;
+    background: url('./images/basic_bg.edf95\ \(2\).png') repeat;
+}
+
+.left-bar-list dd:first-child, .right-bar-list dd:first-child {
+    border-top: 1px solid #d8d8d8;
+    border-top: 1px solid rgba(0,0,0,.1);
+}
+
+.left-bar-list dd a, .right-bar-list dd a {
+    font: 12px/16px PingFangSC-Regular,'-apple-system',Simsun;
+    display: block;
+    width: 58px;
+    height: 58px;
+    transition: none;
+    text-align: center;
+}
+
+.left-bar-list dd a i, .right-bar-list dd a i {
+    display: block;
+    height: 48px;
+    padding-top: 12px;
+    color: #999;
+    color: rgba(0,0,0,.4);
+}
+
+.left-bar-list dd a .iconfont, .right-bar-list dd a .iconfont {
+    font-size: 16px;
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin: 0 auto 6px;
+    transition: color .3s;
+    color: #000;
+}
+
+.left-bar-list dd a span, .right-bar-list dd a span {
+    transition: color .3s;
+}
+
+/* 隐藏的目录 */
+
+.left-bar-list dd .guide-box, .right-bar-list dd .guide-box {
+    font: 14px/32px PingFangSC-Regular,'-apple-system',Simsun;
+    top: 14px;
+    white-space: nowrap;
+    color: #000;
+}
+
+.left-bar-list dd a .iconfont, .right-bar-list dd a .iconfont {
+    font-size: 16px;
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin: 0 auto 6px;
+    transition: color .3s;
+    color: #000;
+}
+
+.iconfont.icon01{
+    background: url('./images/目录.png') no-repeat;
+}
+.iconfont.icon02{
+    background: url('./images/设置.png') no-repeat;
+}
+.iconfont.icon03{
+    background: url('./images/收\ 藏.png') no-repeat;
+}
+.iconfont.icon04{
+    background: url('./images/返回书页.png') no-repeat;
+}
+
+
+
+
+.left-bar-list .guide-box {
+    right: 72px;
+}
+.guide-box {
+    position: absolute;
+    z-index: 1;
+    display: none;
+    padding: 0 12px;
+    border-radius: 3px;
+    background: #fff;
+}

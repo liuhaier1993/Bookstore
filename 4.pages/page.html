@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>书页</title>
+    <link rel="stylesheet" href="../public/css/base.css">
+    <link rel="stylesheet" href="../public/css/head.css">
+    <link rel="stylesheet" href="./page.css">
+    <script src="../public/js/jquery-3.2.1.js"></script>
+    <script src="../public/js/vue.min.js"></script>   
+</head>
+<body class="theme-0 w800">
+     <!-- 顶部导航 可拆离-->
+     <div class="topNav">
+            <div class="pageHead">
+                 <!-- 登录注册 左边-->
+                <div class="loginBox" id="login_app">
+                    <!-- 登录之前  isLogin一开始就是false-->
+                    <div class="login_before" v-if="!isLogin">    
+                        <a class="reg"  href="http://127.0.0.1:5500/book/2.reader_reg_login/1.reg.html" >注册</a>
+                        <span class="navline">|</span>
+                        <a class="login"  href="http://127.0.0.1:5500/book/2.reader_reg_login/2.login.html" >登录</a>
+                    </div>
+                    <!-- 登录之后显示头像和书架信息也可以进入个人设置 -->
+                    <div class="login_after" v-else>
+                        <!-- 显示头像 -->
+                        <ul>
+                            <li @mouseenter="mousein" @mouseleave="mouseout">
+                                <a href="javascript:;" class="head_img" >
+                                    <!-- 用于上传的头像 -->
+                                    <img :src="src" class="header_log" v-if="src">
+                                    <!-- 默认的头像 -->
+                                    <img src="../public/images/head.png"  class="header_log" v-else>
+                                </a>
+                                <ul class="login_out" v-show="isHover==true">
+                                    <li><a href="http://127.0.0.1:5500/book/2.reader_reg_login/3.personal.html">我的主页</a></li>
+                                    <li><a href="http://127.0.0.1:5500/book/2.reader_reg_login/3.personal.html" target="_blank">个人设置</a></li>
+                                    <li><a href="javascript:;" @click="logout">退出</a></li>
+                                </ul>        
+                            </li>
+                            <li>
+                                 <!-- 我的书架 -->
+                                <a href="http://127.0.0.1:5500/book/5.myBookCase/bookcase_new.html" class="mybook">我的书架
+                                    <em class="bookicon"></em>
+                                </a>
+                            </li>
+                        </ul>       
+                    </div>
+                </div>
+                <!-- 筛选框右边-->
+                <div class="searchBox">
+                    <input type="text" class="search-box"  placeholder="理想三旬" autocomplete="off">
+                    <input type="text" class="submit-input" id="search-submit">
+                    <label for="search-submit" class="search-btn">
+                        <em class="iconfont"></em>
+                    </label>  
+                </div>
+            </div>    
+    </div>
+     <!-- 两边的浮动 设置-->
+     <div class="float-wrap">
+            <!-- 左边粘性定位 -->
+            <div class="left-bar-list">
+                <dl>
+                    <!-- 目录 -->
+                    <dd class="">
+                        <a href="javascript:;">
+                            <i>
+                                <em class="iconfont icon01"></em>
+                                <span>目录</span>
+                            </i>
+            
+                        </a>
+                        <!-- 隐藏的目录 -->
+                        <div class="guide-box">
+    
+                        </div>
+    
+                    </dd>
+                     <!-- 设置 -->
+                    <dd class="">
+                        <a  href="javascript:;">
+                            <i>
+                                <em class="iconfont icon02"></em>
+                                <span>设置</span>
+                            </i>
+            
+                        </a>
+                        <!-- 隐藏的目录 -->
+                        <div class="guide-box">
+    
+                        </div>
+    
+                    </dd>
+                    <!-- 收藏 -->
+                    <dd class="">
+                        <a  href="javascript:;">
+                            <i>
+                                <em class="iconfont icon03"></em>
+                                <span>收藏</span>
+                            </i>
+            
+                        </a>
+                        <!-- 隐藏的目录 -->
+                        <div class="guide-box">
+    
+                        </div>
+    
+                    </dd>
+                    <!-- 返回书页 -->
+                    <dd class="">
+                        <a href="#">
+                            <i>
+                                <em class="iconfont icon04"></em>
+                                <span>书页</span>
+                            </i>
+                        </a>
+                        <!-- 隐藏的目录 -->
+                        <div class="guide-box">
+    
+                        </div>
+    
+                    </dd>
+                </dl>
+            </div>
+            <!--右边 -->
+    </div>
+    <!-- 主页 -->
+    <div class="wrap" id="page_app">
+         <!-- 面包屑导航 -->
+         <div class="crumbs-nav center1020">
+                <span>
+                    <a href="http://127.0.0.1:5500/book/1.index/index.html">首页</a>
+                    <em class="iconfont">＞</em>
+                    <a href="javascript:;" v-text="book_class"></a>
+                    <em class="iconfont" v-if="book_class">＞</em>
+                    <a href="javascript:;" v-text="b_name">悬疑探险</a>
+                    <em class="iconfont">＞</em>
+                    <a href="javascript:;" v-text="c_name">第七特案所</a>
+                </span>
+        </div>
+        <!-- 阅读页主体 -->
+        <div class="read-main-wrap font-family01">
+            <!-- 阅读主页 -->
+            <div>
+                <div class="text-wrap">
+                    <div class="main-text-wrap">
+                        <div class="text-head">
+                            <h3 class="j_chapterName" v-text="chapterName"></h3>
+                        </div>
+                        <div class="read-content j_readContent">
+                            <p v-for="(page,i) of pages" :key="i" v-text="page"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 上一章/下一章/目录 -->
+            <div class="chapter-control dib-wrap">
+                <a :href="`http://127.0.0.1:5500/book/4.pages/page.html?id=${last}`">上一章</a>
+                <span>|</span>
+                <a href="javascript:;">目录</a>
+                <span>|</span>
+                <a :href="`http://127.0.0.1:5500/book/4.pages/page.html?id=${next}`">下一章</a>
+            </div>
+            <!-- 加载中 -->
+        
+        </div>
+    </div>
+    <script src="../public/js/head.js"></script>
+    <script src="./page.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+/* 轮播图的大小 */
+.sliderWrap{
+    position: relative;
+    overflow: hidden;
+    border:2px solid #676767;
+    width: 566px;
+    margin-bottom: 10px;
+}
+
+
+
+.sliderWrap .shuff-flag{
+    width: 566px;
+    height: 306px;
+    overflow: hidden;
+}
+
+.sliderWrap .shuff-flag li img{
+    display: none;
+}
+
+/* 只显示第一张 */
+.sliderWrap .shuff-flag li:first-child img{
+    display: block;  
+}
+
+/* 小圆点 */
+.sliderWrap .shuff-point{
+    position: absolute;
+    bottom: 20px;
+    right: 10%;
+}
+.sliderWrap .shuff-point li{
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #676767;
+    float: left;
+    margin-right: 6px;  
+}
+
+.sliderWrap .shuff-point li.active{   
+    background: #f01742;
+}
+
+.sliderWrap .shuff-point li:hover{
+    cursor: pointer;
+    background: #f01742;      
+}
+
+/* 左右键切换 */
+#thumbs li {
+    float: left;
+    cursor: pointer;
+}
+
+#thumbs li.first {
+    position: absolute;
+    top: 125px;
+    left: 5px;
+    width: 15px;
+    height: 30px;
+}
+
+#thumbs li img{
+    width: 15px;
+    height: 30px;
+}
+
+#thumbs li.last {
+    position: absolute;
+    top: 125px;
+    right: 5px;
+    width: 15px;
+    height: 30px;
+}
+
+
+
+
+

@@ -1,0 +1,484 @@
+/* 表格样式 */
+@font-face {
+	font-weight: normal;
+	font-style: normal;
+	font-family: 'codropsicons';
+	src:url('../fonts/codropsicons/codropsicons.eot');
+	src:url('../fonts/codropsicons/codropsicons.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/codropsicons/codropsicons.woff') format('woff'),
+		url('../fonts/codropsicons/codropsicons.ttf') format('truetype'),
+		url('../fonts/codropsicons/codropsicons.svg#codropsicons') format('svg');
+}
+
+*, *:after, *:before { -webkit-box-sizing: border-box; box-sizing: border-box; }
+.clearfix::after{ content: '';display:block;clear: both; }
+
+body{
+  background: url('../images/snow.jpg') no-repeat;
+  background-size: cover;
+
+}
+
+.input-container-reg {
+	margin: 0 auto;
+	/* text-align: center; */
+	/* overflow: hidden; */
+  background-color: aliceblue;
+  /* width: 500px; */
+}
+
+
+.input-container{
+  margin: 0 auto;
+	text-align: center;
+	overflow: hidden;
+  background-color: aliceblue;
+  max-width: 400px;
+}
+
+ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+
+.input {
+	position: relative;
+	z-index: 1;
+  float: left;
+  margin:6px 10px 10px 30px;
+}
+
+
+li div.tip{
+  height: 37px;
+  line-height: 37px;
+  text-align: center;
+  margin: 6px 0;
+  float: left;
+}
+
+
+li div.tip .info{
+  font-size:12px;
+  color: rgb(248, 6, 6);
+}
+
+.input__field {
+	position: relative;
+	display: block;
+	float: right;
+	padding: 0.8em;
+	width: 60%;
+	border: none;
+	border-radius: 0;
+	background: #f0f0f0;
+	color: #aaa;
+	font-weight: bold;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	-webkit-appearance: none; /* for box shadows to show on iOS */
+}
+
+.input__field:focus {
+	outline: none;
+}
+
+.input__label {
+	display: inline-block;
+	/* float: right; */
+	padding: 0 1em;
+	width: 40%;
+	color: #6a7989;
+	font-weight: bold;
+	font-size: 70.25%;
+	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+
+.tip i{
+  width: 7px;
+  height: 11px;
+  text-indent: -9999px;
+  background: url('../images/icoPicture\ \(1\).png') no-repeat;
+}
+
+.tip i.oriLeft {
+  background-position: 0 -672px;
+}
+
+.tip i.correctLeft {
+  background: url('../images/icoPicture\ \(1\).png') no-repeat;
+  display: block;
+  overflow: hidden;
+  width: 16px;
+  height: 16px;
+  margin: 10px 0 30px 30px;
+  text-indent: -9999px;
+  background-position: 0 -200px;
+}
+
+
+/* 相对定位 */
+/* 这里决定了三个按钮的显示与隐藏 */
+.hidden {
+    display: none;   
+  }
+
+#login,
+#register {
+  position: relative;
+}
+
+/* 猫头鹰控件,与表单无关 */
+#login #owl-login,
+#register #owl-login {
+  /* 容器的大小 */
+  width: 211px;
+  height: 108px;
+  background-image: url("../images/owl-login.png");
+  /* 绝对定位 */
+  position: absolute;
+  /* 决定猫头鹰头部与表单的位置,让猫头鹰的头部位于表单顶部 */
+  top: -100px;
+  /* 让头部居中 */
+  left: 50%;
+  margin-left: -111px;
+}
+
+
+/* 左手 */
+#login #owl-login .hand,
+#register #owl-login .hand {
+  width: 34px;
+  height: 34px;
+  -webkit-border-radius: 40px;
+  border-radius: 40px;
+  background-color: #472d20;
+   -webkit-transform: scaleY(0.6);
+  -moz-transform: scaleY(0.6);
+  -o-transform: scaleY(0.6);
+  -ms-transform: scaleY(0.6);
+  transform: scaleY(0.6);
+  -webkit-transition: 0.3s ease-out;
+  -moz-transition: 0.3s ease-out;
+  -o-transition: 0.3s ease-out;
+  -ms-transition: 0.3s ease-out;
+  transition: 0.3s ease-out; 
+  position: absolute;
+  left: 14px;
+  /* 相对于表单的位置 */
+  bottom: -8px;
+}
+
+/* 猫头鹰的右手本来是重合的现在分离 */
+#login #owl-login .hand.hand-r,
+#register #owl-login .hand.hand-r {
+  left: 170px;
+}
+
+
+/* 输入密码时 */
+#login #owl-login.password .hand,
+#register #owl-login.password .hand {
+  -webkit-transform: translateX(42px) translateY(-15px) scale(0.7);
+  -moz-transform: translateX(42px) translateY(-15px) scale(0.7);
+  -o-transform: translateX(42px) translateY(-15px) scale(0.7);
+  -ms-transform: translateX(42px) translateY(-15px) scale(0.7);
+  transform: translateX(42px) translateY(-15px) scale(0.7);
+}
+
+#login #owl-login.password .hand.hand-r,
+#register #owl-login.password .hand.hand-r {
+  -webkit-transform: translateX(-42px) translateY(-15px) scale(0.7);
+  -moz-transform: translateX(-42px) translateY(-15px) scale(0.7);
+  -o-transform: translateX(-42px) translateY(-15px) scale(0.7);
+  -ms-transform: translateX(-42px) translateY(-15px) scale(0.7);
+  transform: translateX(-42px) translateY(-15px) scale(0.7);
+}
+
+
+/* 猫头鹰的手臂 */
+#login #owl-login .arms,
+#register #owl-login .arms {
+  top: 58px;
+  position: absolute;
+  width: 100%;
+  height: 41px;
+  /* 一开始的隐藏的 */
+  overflow: hidden;
+}
+
+
+#login #owl-login .arms .arm,
+#register #owl-login .arms .arm {
+  width: 40px;
+  height: 65px;
+  position: absolute;
+  left: 20px;
+  top: 40px;
+  /* 左手臂 */
+  background-image: url("../images/owl-login-arm.png");
+  -webkit-transition: 0.3s ease-out;
+  -moz-transition: 0.3s ease-out;
+  -o-transition: 0.3s ease-out;
+  -ms-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+  -webkit-transform: rotate(-20deg);
+  -moz-transform: rotate(-20deg);
+  -o-transform: rotate(-20deg);
+  -ms-transform: rotate(-20deg);
+  transform: rotate(-20deg);
+}
+
+
+/* 右手臂 */
+#login #owl-login .arms .arm.arm-r,
+#register #owl-login .arms .arm.arm-r {
+  -webkit-transform: rotate(20deg) scaleX(-1);
+  -moz-transform: rotate(20deg) scaleX(-1);
+  -o-transform: rotate(20deg) scaleX(-1);
+  -ms-transform: rotate(20deg) scaleX(-1);
+  transform: rotate(20deg) scaleX(-1);
+  left: 158px;
+}
+
+#login #owl-login.password .arms .arm,
+#register #owl-login.password .arms .arm {
+  -webkit-transform: translateY(-40px) translateX(40px);
+  -moz-transform: translateY(-40px) translateX(40px);
+  -o-transform: translateY(-40px) translateX(40px);
+  -ms-transform: translateY(-40px) translateX(40px);
+  transform: translateY(-40px) translateX(40px);
+} 
+
+ #login #owl-login.password .arms .arm.arm-r,
+#register #owl-login.password .arms .arm.arm-r {
+  -webkit-transform: translateY(-40px) translateX(-40px) scaleX(-1);
+  -moz-transform: translateY(-40px) translateX(-40px) scaleX(-1);
+  -o-transform: translateY(-40px) translateX(-40px) scaleX(-1);
+  -ms-transform: translateY(-40px) translateX(-40px) scaleX(-1);
+  transform: translateY(-40px) translateX(-40px) scaleX(-1);
+} 
+
+
+/* 表单 */
+#login .loginform
+{
+  margin-top: 200px;
+  position: relative;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  max-width: 500px;
+  padding: 0;
+}
+
+
+#login .loginform.log{
+  max-width: 400px;
+}
+
+
+/* 字体颜色 */
+#login .loginform input
+{
+  color: #444;
+}
+
+
+/* 调整注册框的大小 */
+#login .loginform .pad,
+#register .loginform .pad {
+  overflow: hidden;
+  padding: 30px 0;
+}
+
+/* 注册与登录框 */
+#login .loginform .form-actions
+ {
+  border-top: 1px solid #e4e4e4;
+  background-color: #f7f7f7;
+  padding: 15px 30px;
+  text-align: right; 
+}
+
+#login .login {
+  height: 0;
+}
+
+.btn-primary {
+    background-color: #1a8fb4;
+  }
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+  background-color: #00789d;
+}
+
+
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.428571429;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    
+  }
+  
+  .btn:focus {
+    outline: thin dotted #333;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+  }
+  
+  .btn:hover,
+  .btn:focus {
+    color: #333333;
+    text-decoration: none;
+  }
+
+
+  .pull-left {
+    float: left !important;
+  }
+
+  btn-link {
+    font-weight: normal;
+    color: #428bca;
+    cursor: pointer;
+    border-radius: 0;
+  }
+  
+  
+  
+  .btn-link:hover,
+  .btn-link:focus {
+    color: #2a6496;
+    text-decoration: underline;
+    background-color: transparent;
+  }
+
+
+  a.btn-link.text-muted {
+    color: #ccc;
+  }
+  
+  a.btn-link.text-muted:hover,
+  a.btn-link.text-muted:active,
+  a.btn-link.text-muted:focus {
+    color: #1a8fb4;
+  }
+
+
+  .container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  
+  .container:before,
+  .container:after {
+    display: table;
+    content: " ";
+  }
+  
+  .container:after {
+    clear: both;
+  }
+
+
+
+
+  /* Hideo */
+.input--hideo {
+	overflow: hidden;
+	background: #fff;
+}
+
+.input__field--hideo {
+	padding: 0.85em 0.85em 0.85em 3em;
+	width: 100%;
+	background: transparent;
+	-webkit-transform: translate3d(1em, 0, 0);
+	transform: translate3d(1em, 0, 0);
+	-webkit-transition: -webkit-transform 0.3s;
+	transition: transform 0.3s;
+}
+
+.log .input__field--hideo{
+  width: 220px;
+}
+
+.input__label--hideo {
+	position: absolute;
+	padding: 1.25em 0 0;
+	width: 4em;
+	height: 100%;
+}
+
+.input__label--hideo::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	width: 4em;
+	height: 100%;
+	background: #899dda;
+	-webkit-transform-origin: 0% 50%;
+	transform-origin: 0% 50%;
+	-webkit-transition: -webkit-transform 0.3s;
+	transition: transform 0.3s;
+}
+
+.icon--hideo {
+	color: #fff;
+	-webkit-transform: scale3d(1, 1, 1); /* Needed for Chrome bug */
+	transform: scale3d(1, 1, 1);
+	-webkit-transform-origin: 0% 50%;
+	transform-origin: 0% 50%;
+	-webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+}
+
+.input__label-content--hideo {
+	position: absolute;
+	top: 100%;
+}
+
+.input__field--hideo:focus {
+	-webkit-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
+}
+
+.input__field--hideo:focus + .input__label--hideo::before {
+	-webkit-transform: scale3d(0.8, 1, 1);
+	transform: scale3d(0.8, 1, 1);
+}
+
+.input__field--hideo:focus + .input__label--hideo .icon--hideo {
+	-webkit-transform: scale3d(0.6, 0.6, 1);
+	transform: scale3d(0.6, 0.6, 1);
+}
+
+/* 图标的大小 */
+.icon {
+	color: #ddd !important;
+	font-size: 150% !important;
+}

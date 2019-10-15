@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>页头</title>
+<!-- <link rel="stylesheet" href="css/normalize.css"> -->
+<!-- <link rel="stylesheet" href="css/snow.css"> -->
+
+<!-- 表单样式 -->
+<link rel="stylesheet" href="css/login.css">
+<!--切换 -->
+<link rel="stylesheet" href="css/sign-up-login.css">
+<!-- 注册与登录输入框的小图标 -->
+<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+<!-- 注册与登录的样式 -->
+<link rel="stylesheet" href="css/inputEffect.css" />
+<!-- 验证码的样式可合并 -->
+<link rel="stylesheet" href="css/verifyCode.css" />
+
+<!-- <link rel="stylesheet" href="css/tooltips.css" /> -->
+<!-- <link rel="stylesheet" href="css/spop.min.css" /> -->
+</head>
+<body>
+<div id="app">
+	<div id="login">	
+		<input id="tab-1" type="radio" name="tab" class="sign-in hidden" checked/>
+		<input id="tab-2" type="radio" name="tab" class="sign-up hidden" />
+		<input id="tab-3" type="radio" name="tab" class="sign-out hidden" />
+		<div class="wrapper">
+			<!-- 登录页面 -->
+			<div class="login sign-in-htm">
+				<form class="container offset1 loginform" id="app_login">
+					<!-- 猫头鹰控件(css里面用的是id) -->
+					<div id="owl-login" class="login-owl" :class="change01">
+						<div class="hand"></div>
+						<div class="hand hand-r"></div>
+						<div class="arms">
+							<div class="arm"></div>
+							<div class="arm arm-r"></div>
+						</div>
+					</div>
+					<div class="pad input-container">
+						<section class="content">
+							<span class="input input--hideo">
+								<input class="input__field input__field--hideo" type="text" id="login-username" autocomplete="off" placeholder="请输入用户名" tabindex="1"
+								v-model="log_name"/>
+								<!-- 失去焦点判断用户名是否为空 -->
+								<label class="input__label input__label--hideo" for="login-username">
+									<i class="fa fa-fw fa-user icon icon--hideo"></i>
+									<span class="input__label-content input__label-content--hideo"></span>
+								</label>
+							</span>
+							<span class="input input--hideo">
+								<input class="input__field input__field--hideo" type="password" id="login-password"  v-model="log_upwd"
+								placeholder="请输入密码" tabindex="2" @focus="upwd_focus" @blur="upwd_blur"/>
+								<label class="input__label input__label--hideo" for="login-password">
+									<i class="fa fa-fw fa-lock icon icon--hideo"></i>
+									<span class="input__label-content input__label-content--hideo"></span>
+								</label>
+							</span>
+							<span class="input input--hideo input--verify_code">
+								<input class="input__field input__field--hideo" type="text" id="login-verify-code" 
+									autocomplete="off" placeholder="请输入验证码" tabindex="3"  v-model="log_yz"/>								
+								<label class="input__label input__label--hideo" for="login-verify-code">
+									<i class="fa fa-fw fa-bell-o icon icon--hideo"></i>
+									<span class="input__label-content input__label-content--hideo"></span>
+								</label>								
+							</span>
+							<canvas class="verify-code-canvas" id="login-verify-code-canvas"></canvas>
+						</section>
+					</div>
+					<div class="form-actions">
+						<a tabindex="4" class="btn pull-left btn-link text-muted" onclick="goto_forget()">忘记密码?</a>
+						<!--点击返回注册 -->
+						<a tabindex="5" class="btn btn-link text-muted" onclick="goto_register()">注册</a>
+						<input class="btn btn-primary" type="button" tabindex="3" @click="login" value="登录" 
+							style="color:white;"/>
+					</div>
+				</form>
+			</div>
+			<!-- 忘记密码页面 -->
+			<div class="login sign-out-htm">
+				<form action="#" method="post" class="container offset1 loginform">
+					<!-- 猫头鹰控件 -->
+					<div id="owl-login" class="forget-owl">
+						<div class="hand"></div>
+						<div class="hand hand-r"></div>
+						<div class="arms">
+							<div class="arm"></div>
+							<div class="arm arm-r"></div>
+						</div>
+					</div>
+					<div class="pad input-container">
+						<section class="content">
+							<span class="input input--hideo">
+								<input class="input__field input__field--hideo" type="text" id="forget-username" autocomplete="off" placeholder="请输入用户名"/>
+								<label class="input__label input__label--hideo" for="forget-username">
+									<i class="fa fa-fw fa-user icon icon--hideo"></i>
+									<span class="input__label-content input__label-content--hideo"></span>
+								</label>
+							</span>
+							<span class="input input--hideo">
+								<input class="input__field input__field--hideo" type="text" id="forget-code" autocomplete="off" placeholder="请输入注册码"/>
+								<label class="input__label input__label--hideo" for="forget-code">
+									<i class="fa fa-fw fa-wifi icon icon--hideo"></i>
+									<span class="input__label-content input__label-content--hideo"></span>
+								</label>
+							</span>
+							<span class="input input--hideo">
+								<input class="input__field input__field--hideo" type="password" id="forget-password" placeholder="请重置密码" />
+								<label class="input__label input__label--hideo" for="forget-password">
+									<i class="fa fa-fw fa-lock icon icon--hideo"></i>
+									<span class="input__label-content input__label-content--hideo"></span>
+								</label>
+							</span>
+						</section>
+					</div>
+					<div class="form-actions">
+						<a class="btn pull-left btn-link text-muted" >返回登录</a>
+						<!-- <input class="btn btn-primary" type="button" onclick="forget()" value="重置密码" 
+							style="color:white;"/> -->
+					</div>
+				</form>
+			</div>
+			<!-- 注册页面 -->
+			<div class="login sign-up-htm" id="app_reg">
+				<form action="#" method="post" class="container offset1 loginform">
+					<!-- 猫头鹰控件 -->
+					<div id="owl-login" class="register-owl" :class="change02">
+						<div class="hand"></div>
+						<div class="hand hand-r"></div>
+						<div class="arms">
+							<div class="arm"></div>
+							<div class="arm arm-r"></div>
+						</div>
+					</div>
+					<div class="pad input-container">
+						<section class="content">
+							<span class="input input--hideo">
+								<input class="input__field input__field--hideo" type="text" id="register-username" v-text="reg_name" 
+									autocomplete="off" placeholder="请输入用户名"  />
+								<label class="input__label input__label--hideo" for="register-username">
+									<i class="fa fa-fw fa-user icon icon--hideo"></i>
+									<span class="input__label-content input__label-content--hideo"></span>
+								</label>
+								<!-- 关于用户名的提示 -->
+								<span></span>
+							</span>
+							<span class="input input--hideo">
+								<input class="input__field input__field--hideo" type="password" id="register-password" v-text="reg_upwd01"
+								autocomplete="off" placeholder="请输入密码"  @focus="upwd01_focus" @blur="upwd01_blur"/>
+								<label class="input__label input__label--hideo" for="register-password">
+									<i class="fa fa-fw fa-lock icon icon--hideo"></i>
+									<span class="input__label-content input__label-content--hideo"></span>
+								</label>
+							</span>
+							<span class="input input--hideo">
+								<input class="input__field input__field--hideo" type="password" id="register-repassword" v-text="reg_upwd02"
+								autocomplete="off" placeholder="请确认密码"  @focus="upwd02_focus" @blur="upwd02_blur"/>
+								<label class="input__label input__label--hideo" for="register-repassword">
+									<i class="fa fa-fw fa-lock icon icon--hideo"></i>
+									<span class="input__label-content input__label-content--hideo"></span>
+								</label>
+							</span>
+							<!-- <span class="input input--hideo">
+								<input class="input__field input__field--hideo" type="text" id="register-code" autocomplete="off" placeholder="请输入注册码"/>
+								<label class="input__label input__label--hideo" for="register-code">
+									<i class="fa fa-fw fa-wifi icon icon--hideo"></i>
+									<span class="input__label-content input__label-content--hideo"></span>
+								</label>
+							</span> -->
+						</section>
+					</div>
+					<div class="form-actions">
+						<a class="btn pull-left btn-link text-muted" onclick="goto_login()">返回登录</a>
+						<input class="btn btn-primary" type="button" @click="register" value="注册" 
+							style="color:white;"/>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+<script src="../public/js/jquery-3.2.1.js"></script>
+<!-- <script src="./js/jquery-1.11.3.js"></script> -->
+<!-- <script src="js/snow.js"></script> -->
+<!-- <script src="js/jquery.pure.tooltips.js"></script> -->
+<!-- 控制生成的验证码 -->
+<script src="js/verifyCode.js"></script>
+
+<script src="js/spop.min.js"></script>
+<script src="../public/js/vue.min.js"></script>
+<script src="../public/js/axios.min.js"></script>
+<script src="./js/login.js"></script>
+</html>

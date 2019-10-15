@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>个人信息页面</title>
+    <link rel="stylesheet" href="../public/css/base.css">
+    <link rel="stylesheet" href="../public/css/head.css">
+    <link rel="stylesheet" href="./css/personal.css">
+    <link rel="stylesheet" href="../public/css/footer.css">
+    <script src="../public/js/jquery-3.2.1.js"></script>
+    <script src="../public/js/vue.min.js"></script>
+    <script src="../public/js/axios.min.js"></script>
+</head>
+<body>
+    <!-- 页头 -->
+    <div class="topNav">
+            <div class="pageHead">
+                    <!-- 登录注册 左边-->
+                <div class="loginBox" id="login_app">
+                    <!-- 登录之前  isLogin一开始就是false-->
+                    <div class="login_before" v-if="!isLogin">    
+                        <a class="reg"  href="http://127.0.0.1:5500/book_2/2.reader_reg_login/1.reg.html" target="_blank">注册</a>
+                        <span class="navline">|</span>
+                        <a class="login"  href="http://127.0.0.1:5500/book_2/2.reader_reg_login/2.login.html" target="_blank">登录</a>
+                    </div>
+                    <!-- 登录之后显示头像和书架信息也可以进入个人设置 -->
+                    <div class="login_after" v-else>
+                        <!-- 显示头像 -->
+                        <ul>
+                            <li @mouseenter="mousein" @mouseleave="mouseout">
+                                <a href="#" class="head_img" >
+                                    <!-- 用于上传的头像 -->
+                                    <img :src="src" class="header_log" v-if="src">
+                                    <!-- 默认的头像 -->
+                                    <img src="../public/images/head.png"  class="header_log" v-else>
+                                </a>
+                                <ul class="login_out" v-show="isHover==true">
+                                    <li><a href="">我的主页</a></li>
+                                    <li><a href="http://127.0.0.1:5500/book_2/2.reader_reg_login/3.personal.html" target="_blank">个人设置</a></li>
+                                    <li><a href="javascript:;" @click="logout">退出</a></li>
+                                </ul>        
+                            </li>
+                            <li>
+                                    <!-- 我的书架 -->
+                                <a href="http://127.0.0.1:5500/book_2/5.myBookCase/bookcase_new.html" class="mybook" target="_blank">我的书架
+                                    <em class="bookicon"></em>
+                                </a>
+                            </li>
+                        </ul>       
+                    </div>
+                </div>
+                <!-- 筛选框右边-->
+                <div class="searchBox">
+                    <input type="text" class="search-box"  placeholder="理想三旬" autocomplete="off">
+                    <input type="text" class="submit-input" id="search-submit">
+                    <label for="search-submit" class="search-btn">
+                        <em class="iconfont"></em>
+                    </label>  
+                </div>
+            </div>    
+    </div>
+    <!-- 首页导航栏 可拆离-->
+    <div class="top-nav-wrap">
+        <div class="box-center">
+                <ul class="cf">
+                    <li>
+                        <a href="#">古代言情</a>
+                    </li>
+                    <li>
+                        <a href="#">都市言情</a>
+                    </li>
+                    <li>
+                        <a href="#">玄幻仙侠</a>
+                    </li>
+                    <li>
+                        <a href="#">悬疑科幻</a>
+                    </li>
+                    <li>
+                        <a href="#">考古历史</a>
+                    </li>
+                    <li>
+                        <a href="#">浪漫学园</a>
+                    </li>
+                    <li>
+                        <a href="#">儿童文学</a>
+                    </li>
+                </ul>
+        </div>
+    </div>
+    <!-- 个人设置 -->
+    <div class="g-bd" id="app">
+        <!-- 基本信息 -->
+        <div class="g-wrap" v-show="showBox">
+            <div class="u-title">
+                <h3>
+                    <span class="f-ff2">个人设置</span>
+                </h3>
+            </div>
+            <ul class="m-tabs f-cb">
+                <li class="fst">
+                    <a href="javascript:;">
+                        <em>基本设置</em>
+                    </a>
+                </li>
+                <li class="fst">
+                    <a  href="javascript:;">
+                        <em>绑定设置</em>
+                    </a>
+                </li>
+                <li class="fst">
+                    <a href="javascript:;">
+                        <em>特别设置</em>
+                    </a>
+                </li>     
+            </ul>
+            <div class="change_info" >
+                <!-- 个人信息文字 -->
+                <div class="change_msg">
+                    <p >
+                        <label for="nickname">昵称:</label> 
+                        <input type="text" id="nickname" v-model="nickname">  
+                    </p>
+                    <p>  
+                        <label for="sign">个性签名:</label>
+                        <input type="text" id="sign" v-model="sign">    
+                    </p>
+                    <p>
+                        <label>性别:</label>
+                        <label for="man">男
+                            <input type="radio" name="gender" id="man" value="男" v-model="gender">
+                        </label>
+                        <label for="woman">女
+                            <input type="radio" name="gender" id="woman" value="女" v-model="gender">
+                        </label>   
+                    </p>
+                    <p>
+                        <label for="email">邮箱:</label>
+                        <input type="text" name="email" id="email" v-model="email" >
+                    </p>
+                    <button @click="changeInfo">
+                        <span>保&nbsp;存</span>
+                    </button>
+                </div>
+                <!-- 个人信息头像 -->
+                <div class="change_img">  
+                    <!-- 用户头像 -->
+                    <!-- <img  class="head_img"  :src="src" v-if="src"> -->
+                    <img  class="head_img"  :src="src" >
+                    <!-- 默认头像 -->
+                    <!-- <img  class="head_img" src="./images/头像.png" v-else> -->
+                    <span class="btm"></span>
+                     <!--点击切换到上传头像页面  -->    
+                    <a href="javascript:;" class="upload_img" @click="changeBox" >更换头像</a>      
+                </div>         
+            </div>
+        </div>
+        <!-- 上传头像 -->
+        <div class="g-wrap m-edtimg" v-show="!showBox">
+            <div class="u-bread1">
+                <a href="javascript:;" @click="changeBox">个人设置</a>
+                <span class="arr">></span>
+                <span class="f-fw1">更换头像</span>   
+            </div>
+            <!-- 上传头像 -->
+            <div class="file">
+                    <div class="file_upload" >          
+                        <label class="ui_button" for="avatar">上传预览
+                                <input type="file" name="avatar" id="avatar" 
+                                accept="image/png, image/jpeg, image/gif, image/jpg" 
+                            @change="changepic">  
+                        </label> 
+                        <span class="upload_tip">支持png、jpeg、jpg格式的图片，且文件小于20M</span>
+                        <div class="m-edtimg left">
+                            <div class="img ztag f-pr">
+                                <img src="./images/default_cover.png" alt="" class="dft ztag">
+                            </div>
+
+                        </div>
+                    </div >   
+                    <div class="file_prev">
+                            <p class="prevtip">头像预览</p>
+                            <p class="prev">
+                                <img :src="src" class="prev_avatar avatar01" >
+                                <span>大尺寸头像（180x180像素）</span>
+                                <img :src="src" class="prev_avatar avatar02" >
+                                <span>小尺寸头像(40x40像素)</span>
+                            </p>   
+                     </div>
+
+            </div>
+           <button @click="upload" class="save">保存</button>
+           <button  @click="cancel"  class="cancel">取消</button>  
+
+        </div>   
+    </div>
+     <!-- 页脚 -->
+     <div class="footer">
+            <div class="footer_main cf">
+                <div class="user clearfix">
+                    <dl class="cooperate_dl">
+                        <dt></dt>
+                        <dd>
+                            <p>
+                                外部渠道联系:张小姐
+                                <!-- 邮箱 -->
+                                <a href="#">lhw_wei@yuewen.com</a>                       
+                            </p>
+                            <p>
+                                外部渠道联系:张小姐
+                                <!-- 邮箱 -->
+                                <a href="#">lhw_wei@yuewen.com</a>                       
+                            </p>
+                            
+                        </dd>
+    
+    
+    
+                    </dl>
+                </div>
+                <div class="foot">
+                    <p>
+                        <a href="http://www.tencent.com/" target="_blank" rel="nofollow">关于腾讯</a>
+                        <a href="http://www.tencent.com/index_e.shtml" target="_blank" rel="nofollow">About Tencent</a>
+                        <a href="http://www.qq.com/contract.shtml" target="_blank" rel="nofollow">服务协议</a>
+                        <a href="http://open.qq.com/" target="_blank" rel="nofollow">开放平台</a>
+                        <a href="http://www.tencentmind.com/" target="_blank" rel="nofollow">广告服务</a>
+                        <a href="http://hr.tencent.com/" target="_blank" rel="nofollow">腾讯招聘</a>
+                        <a href="http://gongyi.qq.com/" target="_blank" rel="nofollow">腾讯公益</a>
+                        <a href="https://www.yuewen.com/service.html" target="_blank" rel="nofollow">客服中心</a>
+                        <a class="nobroder" href="http://www.qq.com/map/" target="_blank" rel="nofollow">网站导航</a>
+                    </p>
+                    <p> Copyright&nbsp;&nbsp;©&nbsp;1998&nbsp;-&nbsp;2019&nbsp;Tencent.&nbsp;All&nbsp;Rights&nbsp;Reserved</p>
+                    <p>腾讯公司&nbsp;版权所有</p>
+                    <p>粤府新函[2001]87号 粤网文[2011]0483-070号 网络视听许可证1904073号 网站备案/许可证号：
+                        <a style="border-right: 0 solid #CCC;" href="http://beian.miit.gov.cn/publish/query/indexFirst.action" rel="noreferrer" target="_blank">粤B2-20090059 B2-20090028</a>
+                    </p>
+                </div>
+                <div id="icp">
+                    <a href="http://www.sznet110.gov.cn/netalarm/index.jsp" target="_blank" rel="external nofollow">
+                        <img src="http://img1.chuangshi.qq.com/yunqi/p1/footer_img1.png" width="122" height="52">
+                    </a>
+                    <a href="http://www.sznet110.gov.cn/webrecord/innernet/Welcome.jsp?bano=4403101010155" target="_blank" rel="external nofollow"><img src="http://img1.chuangshi.qq.com/yunqi/p1/footer_img2.png" width="122" height="52">
+                    </a>
+                    <a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=0272000112400002" target="_blank" rel="external nofollow">
+                        <img src="http://img1.chuangshi.qq.com/yunqi/p1/footer_img3.png" width="122" height="52">
+                    </a>
+                    <a href="http://www.12377.cn/" target="_blank" rel="external nofollow">
+                        <img src="http://img1.chuangshi.qq.com/yunqi/p1/footer_img4.png" width="122" height="52">
+                    </a>
+                    <a href="http://www.wenming.cn/" target="_blank" rel="external nofollow">
+                        <img src="http://img1.chuangshi.qq.com/yunqi/p1/footer_img5.png" width="122" height="52">
+                    </a>
+                    <a href="http://www.shjbzx.cn/" target="_blank" rel="external nofollow">
+                        <img src="http://img1.chuangshi.qq.com/yunqi/p1/footer_img6.png" width="122" height="52">
+                    </a>
+                </div>
+    
+            </div>
+    
+    
+    
+    
+    
+    </div>
+    <!-- 必须放在文件底部 -->
+    <script src="../public/js/head.js"></script>
+    <script src="./js/personal.js"></script>
+
+</body>
+</html>

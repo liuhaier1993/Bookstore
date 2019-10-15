@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>书城首页</title>
+    <link rel="stylesheet" href="../public/css/base.css">
+    <link rel="stylesheet" href="../public/css/head.css">
+    <link rel="stylesheet" href="../public/css/footer.css">
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./banner.css">
+    <script src="../public/js/jquery-3.2.1.js"></script>
+    <script src="../public/js/vue.min.js"></script> 
+    <script src="../public/js/axios.min.js"></script>
+</head>
+<body>
+    <!-- 顶部导航 可拆离-->
+    <div class="topNav">
+        <div class="pageHead">
+             <!-- 登录注册 左边-->
+            <div class="loginBox" id="login_app">
+                <!-- 登录之前  isLogin一开始就是false-->
+                <div class="login_before" v-if="!isLogin">    
+                    <a class="reg"  href="../2.reader_reg_login/1.reg.html" >注册</a>
+                    <span class="navline">|</span>
+                    <a class="login" href="../2.reader_reg_login/2.login.html" >登录</a>
+                </div>
+                <!-- 登录之后显示头像和书架信息也可以进入个人设置 -->
+                <div class="login_after" v-else>
+                    <!-- 显示头像 -->
+                    <ul class="cf">
+                        <span v-text=`欢迎您,书友:${readername}` class="welcom"></span>           
+                        <li @mouseenter="mousein" @mouseleave="mouseout">                           
+                            <a href="#" class="head_img" >
+                                <!-- 用于上传的头像 -->
+                                <img :src="src" class="header_log" v-if="src">
+                                <!-- 默认的头像 -->
+                                <img src="../public/images/head.png"  class="header_log" v-else>
+                            </a>
+                            <ul class="login_out" v-show="isHover">
+                                <li><a href="../2.reader_reg_login/3.personal.html">我的主页</a></li>
+                                <li><a href="../2.reader_reg_login/3.personal.html">个人设置</a></li>
+                                <li><a href="javascript:;" @click="logout">退出</a></li>
+                            </ul>        
+                        </li>
+                        <li>
+                             <!-- 我的书架 -->
+                            <a href="../5.myBookCase/bookcase_new.html" class="mybook" >我的书架
+                                <em class="bookicon"></em>
+                            </a>
+                        </li>
+                    </ul>       
+                </div>
+            </div>
+            <!-- 筛选框右边-->
+            <div class="searchBox">
+                <input type="text" class="search-box"  placeholder="理想三旬" autocomplete="off">
+                <input type="text" class="submit-input" id="search-submit">
+                <label for="search-submit" class="search-btn">
+                    <em class="iconfont"></em>
+                </label>  
+            </div>
+        </div>    
+    </div>
+    <!-- 首页导航栏 可拆离-->
+    <div class="top-nav-wrap">
+        <div class="box-center">
+                <ul class="cf">
+                    <li>
+                        <a  href="javascript:;">古代言情</a>
+                    </li>
+                    <li>
+                        <a  href="javascript:;">都市言情</a>
+                    </li>
+                    <li>
+                        <a  href="javascript:;">玄幻仙侠</a>
+                    </li>
+                    <li>
+                        <a  href="javascript:;">悬疑科幻</a>
+                    </li>
+                    <li>
+                        <a  href="javascript:;">考古历史</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">浪漫学园</a>
+                    </li>
+                    <li>
+                        <a  href="javascript:;">儿童文学</a>
+                    </li>
+                </ul>
+        </div>
+    </div>
+    <!-- 首页展示logo与公告活动 -->
+    <div class="pageHead">
+        <!-- 展示书城logo和主打图片 -->
+        <div class="mainNavWrap">
+            <!-- logo -->
+            <a class="yqLogo"  href="javascript:;" title="书院"></a>
+            <!-- 主打图片 -->
+            <a  href="javascript:;" class="topBanner">
+                <img src="./images/iview.jpg" alt="img">
+            </a>
+        </div>
+        <!-- 首页公告活动 -->
+        <div class="index_notice cf">
+            <div class="notice_left">
+                <h6>
+                    <a href="javascript:;">甜爽超人气白金作家十月初携新书浪漫来袭</a>
+                </h6>
+                <p>
+                    <a  href="javascript:;">逆世谋妃</a>
+                </p>
+            </div>
+            <div class="noticeList cf">
+                <ul>
+                    <li>
+                        <span>公告</span>
+                        <em>|</em>
+                        <a  href="javascript:;">西安站星学院作家班开班啦!</a>
+                    </li>
+                    <li>
+                        <span>活动</span>
+                        <em>|</em>
+                        <a  href="javascript:;">网络乱象我举报志愿者招募!</a>
+                    </li>    
+                </ul>
+                <ul>
+                    <li>
+                        <span>公告</span>
+                        <em>|</em>
+                        <a  href="javascript:;">歌唱祖国-全国网文优秀作品!</a>
+                    </li>
+                    <li>
+                        <span>活动</span>
+                        <em>|</em>
+                        <a h href="javascript:;">长沙站星学院作家班开班啦!</a>
+                    </li>    
+                </ul>
+                <ul>
+                    <li>
+                        <span>公告</span>
+                        <em>|</em>
+                        <a  href="javascript:;">中国网文发展报告调研!</a>
+                    </li>
+                    <li>
+                        <span>活动</span>
+                        <em>|</em>
+                        <a  href="javascript:;">超人气大神作家顾染锦携新书!</a>
+                    </li>    
+                </ul>
+
+            </div>
+
+
+        </div>
+    </div>
+    <!-- 页面实体 -->
+    <div class="pageCenter" id="app">
+        <!-- 第一楼 -->
+        <div class="indexOne mb10 cf">
+            <!-- 一楼左侧 -->
+            <div class="tabWrap tabSwitch f1 mr10" >
+                <div class="twoTabBox">
+                    <span :class="{tabCur:isCheck}" @click="change01">本周强推
+                        <cite></cite>
+                    </span>
+                    <span :class="{tabCur:!isCheck}" @click="change01">包月强推
+                        <cite></cite>
+                    </span>        
+                </div>
+                <div id="qtListBox" class="listWrap" >
+                    <div class="tabList">
+                        <ul class="rankList">
+                            <li @mouseenter="qthover" @mouseleave="qtmove" v-for="(elem,i) of recommend" :key="i">
+                                <a :href="`../3.details/details.html?id=${elem.id}`"  class="bookTitle"  v-text="elem.name"></a>
+                                <!-- 默认图片是不显示的 -->
+                                <div class="bookInfoPopup" v-show="is_qthover">
+                                    <div class="bookDataBox cf">
+                                        <a  :href="`../3.details/details.html?id=${elem.id}`" >
+                                            <img  :src="elem.imageUrl" >
+                                        </a>
+                                        <div class="bookDataInfo">
+                                            <h3>
+                                                <a :href="`../3.details/details.html?id=${elem.id}`" v-text="elem.name"></a>
+                                            </h3>
+                                            <p v-text=`作者:${elem.authorName}`></p>
+                                            <p>
+                                                总人气:
+                                                <span v-text="elem.click_volume"></span>
+                                            </p>
+                                            <p>
+                                                最新章节:
+                                                <span  v-text=`${elem.lastChapterName.slice(0,6)}...`></span>
+                                            </p>
+                                            
+                                        </div>
+                                        <p class="intro">
+                                            <span class="gray2">简介:</span>
+                                            <em attr="inner:bookDesc;" v-text=`${elem.introduction.slice(0,70)}...`></em>
+                                        </p>
+
+                                    </div>
+                                    <p class="btn">
+                                        <a  class="pinkBtn" :href="`../3.details/details.html?id=${elem.id}`" >立即阅读</a>
+                                        <a  href="javascript:" bid="15527062">加入书架</a>
+                                    </p>
+
+                                </div>
+                            </li>                                                                              
+                            <li class="more">
+                                <a class="red"  href="javascript:;">更多...</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>              
+            </div>
+            <!-- 一楼中间 -->
+            <div class="indexOneCenter f1">
+                <!-- 轮播图 -->
+                <div class="sliderWrap" id="banner">
+                    <ul class="shuff-flag">
+                        <li class="cf">
+                            <a href="javascript:;">
+                                <img src="./images/banner/01.jpg">
+                            </a>                
+                        </li>
+                        <li class="cf">
+                            <a href="javascript:;">
+                                <img src="./images/banner/02.jpg">
+                            </a>                
+                        </li>
+                        <li class="cf">
+                            <a href="javascript:;">
+                                <img src="./images/banner/03.jpg">
+                            </a>                
+                        </li>
+                        <li class="cf">
+                            <a href="javascript:;">
+                                <img src="./images/banner/04.jpg">
+                            </a>                
+                        </li>
+                        <li class="cf">
+                            <a href="javascript:;">
+                                <img src="./images/banner/05.jpg">
+                            </a>                
+                        </li>             
+                    </ul>       
+                    <ul class="shuff-point">
+                        <li class="active"></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <div id="thumbs">
+                        <li class="first btnPrev click-flag">
+                            <img src="./images/kLeft.png" alt="上一个">
+                        </li> 
+                        <li class="last btnNext click-flag">
+                            <img src="./images/kRight.png" alt="上一个">
+                        </li> 
+
+                    </div>                        
+                </div>
+                <!-- 销售周榜 -->
+                <div class="salesRank">
+                    <div class="salesTab twoTabBox cf" id="salesTab">
+                        <span class="tabCur">
+                            <em>云起销售周榜</em>
+                        </span>
+                    </div>
+                    <div id="salesListWrap" class="salesWrap">
+                        <div class="salesList">
+                            <ul class="cf">
+                                <li v-for="(elem,i) of rankList" :key="i">
+                                    <!-- 类名还需要调整 -->
+                                    <span :class=`n${i+1}`></span>
+                                    <a :href="`../3.details/details.html?id=${elem.id}`" v-text="elem.name"></a>
+                                </li> 
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 一楼右边上半部分(最新上架) -->
+            <div class="tabWrap mb10 fr">
+                <div class="threeTabBox">
+                    <em>最新上架</em>
+                </div>
+                <!-- 上架排行 -->
+                <div class="rankListWrap">
+                    <ul class="rankList rankHover numList">
+                        <!-- 一本书 -->
+                        <li :class="{firstList:i==0}" v-for="(elem,i) of newArrival" :key="i">
+                            <!-- 文字 -->
+                            <div class="hoverHide cf">
+                                <b :class="{num3:i<=2}"  v-text="i+1"></b>
+                                <a :href="`../3.details/details.html?id=${elem.id}`"  v-text="elem.name"></a>
+                            </div>
+                            <!-- 图片 -->
+                            <div class="detailWrap" >
+                                <b :class="{num3:i<=2}" v-text="i+1"></b>
+                                <a :href="`../3.details/details.html?id=${elem.id}`" >
+                                    <!-- 这里的图片还没绑定 -->
+                                    <img src="./images/new/01.jpg" alt="" width="55" height="74">
+                                </a>
+                                <div class="detailInfo">
+                                    <h4>
+                                        <a :href="`../3.details/details.html?id=${elem.id}`"  v-text="elem.name"></a>
+                                    </h4>
+                                    <p>
+                                        作者:
+                                        <a href="javascript:;"  v-text="elem.authorName"></a>
+                                    </p>
+                                 
+                                    <p>
+                                        分类:
+                                        <a href="javascript:;"  v-text="elem.classification"></a>
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                       
+                    </ul>
+                </div>      
+            </div>
+            <!-- 一楼右边下半部分 -->
+            <div id="userBox" class="fr">
+                <!-- 大家都在看 -->
+               <div class="tabWrap fr">
+                   <div class="threeTabBox">
+                       <em>大家都在看</em>
+                   </div>
+                   <div class="noLoginRecList">
+                       <ul>
+                            <li v-for="(elem,i) of clickList" :key="i">                           
+                                <span v-text="elem.classification"></span>
+                                <a :href="`../3.details/details.html?id=${elem.id}`" v-text="elem.name" ></a>
+                            </li>                       
+                       </ul>
+                   </div>
+               </div>
+            </div>
+
+        </div>
+        <!-- 第一楼底部图片 -->
+        <div class="fourBan cf">
+            <a href="javascript:;" class="mr10">
+                <img src="./images/fourBan/03.jpg"  width="206" height="90">
+            </a>
+            <a href="javascript:;" class="mr10">
+                <img src="./images/fourBan/04.jpg"  width="280" height="90">
+            </a>
+            <a href="javascript:;" class="mr10">
+                <img src="./images/fourBan/01.jpg"  width="280" height="90">
+            </a>
+            <a href="javascript:;" >
+                <img src="./images/fourBan/02.jpg"  width="206" height="90">
+            </a>
+        </div>
+        <!-- 第二楼 -->
+        <div class="indexTwo mb10 cf">
+            <!-- 二楼左侧 -->
+            <div class="tabWrap f1 mr10">
+                <div class="threeTabBox">
+                    <em>原创风云榜</em>
+                </div>
+                <div class="listWrap">
+                    <ul class="rankList rankHover numList">
+                        <li >
+                            <div class="hoverHide">
+                                <em>17212</em>
+                                <a :href="`../3.details/details.html?id=97`">盛夏安澜</a>
+                            </div>
+                        </li>
+                        <li >
+                            <div class="hoverHide">
+                                <em>17212</em>
+                                <a :href="`../3.details/details.html?id=97`">盛夏安澜</a>
+                            </div>
+                        </li>
+                        <li >
+                            <div class="hoverHide">
+                                <em>17212</em>
+                                <a :href="`../3.details/details.html?id=97`">盛夏安澜</a>
+                            </div>
+                        </li>                    
+                        <li class="more">
+                            <a href="#" class="red">更多...</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+            <!-- 二楼中间 -->
+            <div class="indexCenter">
+                <h6>古言·悬疑</h6>
+                <div class="centerTab">
+                    <span class="act">单订</span>
+                    <em>|</em>
+                    <span>包月</span>
+                </div>
+                <div class="recBookWrap">
+                    <div class="recBook cf">
+                        <!-- 二楼中间左边 -->
+                        <div class="twoBookWrap">
+                            <div class="recBookBox"  v-for="(elem,i) of guyanxuanyi" :key="i" v-show="i<=2">
+                                <a :href="`../3.details/details.html?id=${elem.id}`" >
+                                    <img :src="elem.imageUrl"  width="78px" height="113px">
+                                </a>
+                                <div class="recBookInfo">
+                                    <h3>
+                                        <a :href="`../3.details/details.html?id=${elem.id}`" v-text="elem.name"></a>
+                                    </h3>
+                                    <p v-text="elem.introduction.slice(0,21)"></p>
+                                    <a :href="`../3.details/details.html?id=${elem.id}`" class="read">[点击阅读]</a>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--二楼中间右边  -->
+                        <div class="moreBookRec">
+                            <ul class="moreList">
+                                <li v-for="(elem,i) of guyanxuanyi" :key="i" v-show="i>=3 && i<=15">
+                                    <a :href="`../3.details/details.html?id=${elem.id}`" v-text="elem.name" t></a>
+                                </li>
+                            </ul>
+                        </div>                 
+                    </div>
+                </div>
+            </div>
+             <!-- 二楼右边 -->
+             <div class="tabWrap tabSwitch fr">
+                <a href="javascript:;">
+                    <img src="./images/guyan/right.jpg" alt="" width="206" height="452">
+                </a>
+            </div>
+        </div>
+        <!-- 三楼 -->
+        <div class="indexTwo mb10 cf">
+            <!-- 三楼左侧 -->
+            <div class="tabWrap f1 mr10">
+                <div class="threeTabBox">
+                    <em>云起新秀榜</em>
+                </div>
+                <div class="listWrap">
+                    <ul class="rankList rankHover numList">
+                        <li >
+                            <div class="hoverHide">
+                                <em>17212</em>
+                                <a href="../3.details/details.html?id=100">美人心慈</a>
+                            </div>
+                        </li>
+                        <li >
+                            <div class="hoverHide">
+                                <em>17212</em>
+                                <a href="../3.details/details.html?id=100">美人心慈</a>
+                            </div>
+                        </li>
+                         
+                        <li class="more">
+                            <a href="javascript:;" class="red">更多...</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <!-- 三楼中间 -->
+            <div class="indexCenter">
+                <h6>现言·青春</h6>
+                <div class="centerTab">
+                    <span class="act">单订</span>
+                    <em>|</em>
+                    <span>包月</span>
+                </div>
+                <div class="recBookWrap">
+                        <div class="recBook cf">
+                            <!-- 三楼中间左边 -->
+                            <div class="twoBookWrap">
+                                <div class="recBookBox"  v-for="(elem,i) of xianyanqingchun" :key="i" v-show="i<=2">
+                                    <a :href="`../3.details/details.html?id=${elem.id}`" >
+                                        <img :src="elem.imageUrl"  width="78px" height="113px">
+                                    </a>
+                                    <div class="recBookInfo">
+                                        <h3>
+                                            <a :href="`../3.details/details.html?id=${elem.id}`" v-text="elem.name" ></a>
+                                        </h3>
+                                        <p v-text="elem.introduction.slice(0,21)"></p>
+                                        <a :href="`../3.details/details.html?id=${elem.id}`" class="read" >[点击阅读]</a>
+    
+                                    </div>
+                                </div>
+                            </div>
+                            <!--三楼中间右边  -->
+                            <div class="moreBookRec">
+                                <ul class="moreList">
+                                    <li v-for="(elem,i) of xianyanqingchun" :key="i" v-show="i>=3 && i<=15">
+                                        <a :href="`http://127.0.0.1:5500/book_2/3.details/details.html?id=${elem.id}`" v-text="elem.name" ></a>
+                                    </li>
+                                </ul>
+                            </div>                 
+                        </div>
+                    </div>             
+            </div>
+             <!-- 三楼右边 -->
+             <div class="tabWrap tabSwitch fr">
+                <a href="javascript:;">
+                    <img src="./images/xianyan/right.jpg" alt="" width="206" height="452">
+                </a>
+            </div>
+        </div>
+        <!-- 四楼 -->
+        <div class="indexTwo mb10 cf">
+            <!--四楼左侧 -->
+            <div class="tabWrap f1 mr10">
+                <div class="threeTabBox">
+                    <em>原创风云榜</em>
+                </div>
+                <div class="listWrap">
+                    <ul class="rankList rankHover numList">
+                        <li >
+                            <div class="hoverHide">
+                                <em>17212</em>
+                                <a href="http://127.0.0.1:5500/book_2/3.details/details.html?id=98">吾欲成凰</a>
+                            </div>
+                        </li>
+                       
+                        <li >
+                            <div class="hoverHide">
+                                <em>17212</em>
+                                <a href="http://127.0.0.1:5500/book_2/3.details/details.html?id=98">吾欲成凰</a>
+                            </div>
+                        </li>
+                       
+                        <li >
+                            <div class="hoverHide">
+                                <em>17212</em>
+                                <a href="http://127.0.0.1:5500/book_2/3.details/details.html?id=98">吾欲成凰</a>
+                            </div>
+                        </li>
+                       
+                        <li >
+                            <div class="hoverHide">
+                                <em>17212</em>
+                                <a href="http://127.0.0.1:5500/book_2/3.details/details.html?id=98">吾欲成凰</a>
+                            </div>
+                        </li>
+                       
+                        <li >
+                            <div class="hoverHide">
+                                <em>17212</em>
+                                <a href="http://127.0.0.1:5500/book_2/3.details/details.html?id=98">吾欲成凰</a>
+                            </div>
+                        </li>
+                       
+                        <li >
+                            <div class="hoverHide">
+                                <em>17212</em>
+                                <a href="http://127.0.0.1:5500/book_2/3.details/details.html?id=98">吾欲成凰</a>
+                            </div>
+                        </li>
+                       
+                        <li >
+                            <div class="hoverHide">
+                                <em>17212</em>
+                                <a href="http://127.0.0.1:5500/book_2/3.details/details.html?id=98">吾欲成凰</a>
+                            </div>
+                        </li>
+                       
+                        <li >
+                            <div class="hoverHide">
+                                <em>17212</em>
+                                <a href="http://127.0.0.1:5500/book_2/3.details/details.html?id=98">吾欲成凰</a>
+                            </div>
+                        </li>
+                       
+                        <li >
+                            <div class="hoverHide">
+                                <em>17212</em>
+                                <a href="http://127.0.0.1:5500/book_2/3.details/details.html?id=98">吾欲成凰</a>
+                            </div>
+                        </li>
+                       
+                        <li >
+                            <div class="hoverHide">
+                                <em>17212</em>
+                                <a href="http://127.0.0.1:5500/book_2/3.details/details.html?id=98">吾欲成凰</a>
+                            </div>
+                        </li>
+                       
+                        <li >
+                            <div class="hoverHide">
+                                <em>17212</em>
+                                <a href="http://127.0.0.1:5500/book_2/3.details/details.html?id=98">吾欲成凰</a>
+                            </div>
+                        </li>
+                       
+                        
+                        <li class="more">
+                            <a href="javascript:;" class="red">更多...</a>
+                        </li>
+                        
+
+
+
+                    </ul>
+
+
+                </div>
+            </div>
+           <!-- 四楼中间 -->
+           <div class="indexCenter">
+                <h6>幻情·科幻</h6>
+                <div class="centerTab">
+                    <span class="act">单订</span>
+                    <em>|</em>
+                    <span>包月</span>
+                </div>
+                <div class="recBookWrap">
+                        <div class="recBook cf">
+                            <!-- 三楼中间左边 -->
+                            <div class="twoBookWrap">
+                                <div class="recBookBox"  v-for="(elem,i) of huanqingkehuan" :key="i" v-show="i<=2">
+                                    <a :href="`http://127.0.0.1:5500/book_2/3.details/details.html?id=${elem.id}`" >
+                                        <img :src="elem.imageUrl"  width="78px" height="113px">
+                                    </a>
+                                    <div class="recBookInfo">
+                                        <h3>
+                                            <a :href="`http://127.0.0.1:5500/book_2/3.details/details.html?id=${elem.id}`" v-text="elem.name" ></a>
+                                        </h3>
+                                        <p v-text="elem.introduction.slice(0,21)"></p>
+                                        <a :href="`http://127.0.0.1:5500/book_2/3.details/details.html?id=${elem.id}`" class="read" >[点击阅读]</a>
+    
+                                    </div>
+                                </div>
+                            </div>
+                            <!--三楼中间右边  -->
+                            <div class="moreBookRec">
+                                <ul class="moreList">
+                                    <li v-for="(elem,i) of huanqingkehuan" :key="i" v-show="i>=3 && i<=15">
+                                        <a :href="`http://127.0.0.1:5500/book_2/3.details/details.html?id=${elem.id}`" v-text="elem.name" ></a>
+                                    </li>
+                                </ul>
+                            </div>                 
+                        </div>
+                    </div>             
+            </div>
+             <!-- 四楼右边 -->
+             <div class="tabWrap tabSwitch fr">
+                <a href="javascript:;">
+                    <img src="./images/kehuan/right.jpg" alt="" width="206" height="452">
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- 页脚 -->
+    <div class="footer">
+        <div class="footer_main cf">
+            <div class="user clearfix">
+                <dl class="cooperate_dl">
+                    <dt></dt>
+                    <dd>
+                        <p>
+                            外部渠道联系:张小姐
+                            <!-- 邮箱 -->
+                            <a href="#">lhw_wei@yuewen.com</a>                       
+                        </p>
+                        <p>
+                            外部渠道联系:张小姐
+                            <!-- 邮箱 -->
+                            <a href="#">lhw_wei@yuewen.com</a>                       
+                        </p>
+                        
+                    </dd>
+
+
+
+                </dl>
+            </div>
+            <div class="foot">
+                <p>
+                    <a href="http://www.tencent.com/" target="_blank" rel="nofollow">关于腾讯</a>
+                    <a href="http://www.tencent.com/index_e.shtml" target="_blank" rel="nofollow">About Tencent</a>
+                    <a href="http://www.qq.com/contract.shtml" target="_blank" rel="nofollow">服务协议</a>
+                    <a href="http://open.qq.com/" target="_blank" rel="nofollow">开放平台</a>
+                    <a href="http://www.tencentmind.com/" target="_blank" rel="nofollow">广告服务</a>
+                    <a href="http://hr.tencent.com/" target="_blank" rel="nofollow">腾讯招聘</a>
+                    <a href="http://gongyi.qq.com/" target="_blank" rel="nofollow">腾讯公益</a>
+                    <a href="https://www.yuewen.com/service.html" target="_blank" rel="nofollow">客服中心</a>
+                    <a class="nobroder" href="http://www.qq.com/map/" target="_blank" rel="nofollow">网站导航</a>
+                </p>
+                <p> Copyright&nbsp;&nbsp;©&nbsp;1998&nbsp;-&nbsp;2019&nbsp;Tencent.&nbsp;All&nbsp;Rights&nbsp;Reserved</p>
+                <p>腾讯公司&nbsp;版权所有</p>
+                <p>粤府新函[2001]87号 粤网文[2011]0483-070号 网络视听许可证1904073号 网站备案/许可证号：
+                    <a style="border-right: 0 solid #CCC;" href="http://beian.miit.gov.cn/publish/query/indexFirst.action" rel="noreferrer" target="_blank">粤B2-20090059 B2-20090028</a>
+                </p>
+            </div>
+            <div id="icp">
+                <a href="http://www.sznet110.gov.cn/netalarm/index.jsp" target="_blank" rel="external nofollow">
+                    <img src="http://img1.chuangshi.qq.com/yunqi/p1/footer_img1.png" width="122" height="52">
+                </a>
+                <a href="http://www.sznet110.gov.cn/webrecord/innernet/Welcome.jsp?bano=4403101010155" target="_blank" rel="external nofollow"><img src="http://img1.chuangshi.qq.com/yunqi/p1/footer_img2.png" width="122" height="52">
+                </a>
+                <a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=0272000112400002" target="_blank" rel="external nofollow">
+                    <img src="http://img1.chuangshi.qq.com/yunqi/p1/footer_img3.png" width="122" height="52">
+                </a>
+                <a href="http://www.12377.cn/" target="_blank" rel="external nofollow">
+                    <img src="http://img1.chuangshi.qq.com/yunqi/p1/footer_img4.png" width="122" height="52">
+                </a>
+                <a href="http://www.wenming.cn/" target="_blank" rel="external nofollow">
+                    <img src="http://img1.chuangshi.qq.com/yunqi/p1/footer_img5.png" width="122" height="52">
+                </a>
+                <a href="http://www.shjbzx.cn/" target="_blank" rel="external nofollow">
+                    <img src="http://img1.chuangshi.qq.com/yunqi/p1/footer_img6.png" width="122" height="52">
+                </a>
+            </div>
+
+        </div>
+
+
+
+
+
+    </div>
+    <script src="../public/js/head.js"></script>
+    <script src="./js/1.index.js"></script>
+    <script src="./js/banner.js"></script>
+   
+</body>
+</html>
